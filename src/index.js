@@ -3,11 +3,8 @@
 
 // console.log(process.env.LOCATIONIQ_API_KEY)
 
-const state = {
-  tempAdjusted:0,
-}
-
-let currTemp = 60;
+let currTemp = parseInt(document.getElementById('temp-now').textContent);
+console.log(currTemp)
 
 const findLatAndLong = (query) => {  
   axios
@@ -65,10 +62,30 @@ const updateTempColor = () => {
   }
   else {
     tempText.id = 'scorching';
+  };
+}
+
+const realTempColor = () => {
+  let tempText = document.getElementById('temp-now');
+  if (parseInt(tempText.textContent) < 50) {
+    tempText.id = 'cold';
   }
+  else if (parseInt(tempText.textContent) < 60) {
+    tempText.id = 'cool';
+  }
+  else if (parseInt(tempText.textContent) < 70) {
+    tempText.id = 'warm';
+  }
+  else if (parseInt(tempText.textContent) < 80) {
+    tempText.id = 'hot';
+  }
+  else {
+    tempText.id = 'scorching';
+  };
 }
 
 updateTempColor()
+realTempColor()
 
 const incTemp = () => {
   currTemp += 1;

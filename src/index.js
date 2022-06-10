@@ -4,7 +4,6 @@
 // console.log(process.env.LOCATIONIQ_API_KEY)
 
 let currTemp = parseInt(document.getElementById('temp-now').textContent);
-console.log(currTemp)
 
 const findLatAndLong = (query) => {  
   axios
@@ -37,13 +36,14 @@ const findLatAndLong = (query) => {
 const registerEventHandlers = () => {
   let submitButton = document.getElementById('submit-location');
   // submitButton.addEventListener("click", changeText);
-  submitButton.addEventListener("click", findLatAndLong)
+  submitButton.addEventListener("click", updateCityName)
   
   let upArrow = document.getElementById('up-arrow');
   upArrow.addEventListener("click", incTemp);
 
   let downArrow = document.getElementById('down-arrow');
   downArrow.addEventListener("click", decTemp);
+
 }
 
 const updateTempColor = () => {
@@ -102,6 +102,14 @@ const decTemp = () => {
   updateTempColor();
 }
 
+const updateCityName = (userInput) => {
+  console.log('entered updateCityName')
+  let inputVal = document.getElementById('curr-loc').value;
+  console.log(inputVal)
+  let cityName = document.getElementById('input-location').childNodes[5];
+  cityName.textContent=inputVal
+}
 
-
+// console.log(document.getElementById("input-location").childNodes[2])
 document.addEventListener("DOMContentLoaded", registerEventHandlers)
+updateCityName("Charlotte, NC")

@@ -5,8 +5,79 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Report</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
+    <video playsinline autoplay muted loop poster="assets/down-chevron.png" id="bgvid-1">
+        <source src="assets/sunny.mp4" type="video/mp4">
+    </video>
+    <container class="page" id="page-1">
+        <div id="spacer-1"></div>
+        <div id="content-1">
+            <h1 id="title">What's the Weather?</h1>
+            <h2 id="subtitle">Dealer's choice!</h2>
+            <p><b>Ever wish you could control the weather?</b> Now you can! With 
+                <b>What's the Weather</b> now anyone can decide what kind of day 
+                it'll be! Simply play with the buttons and make 
+                it <b><em>your day!</em></b></p>
+        </div>
+        <div class="scroll">
+            <h3>Check the weather</h3>
+            <img src="./assets/down-chevron.png" alt="down chevron arrow"></img>
+        </div>
+    </container>
+    <!-- page 2-->
+    <video playsinline autoplay muted loop poster="assets/down-chevron.png" id="bgvid-2">
+        <source src="assets/snow.mp4" type="video/mp4">
+    </video>
+    <container class="page" id="page-2">
+        <div id="input-location">
+            <input type="text" id="curr-loc" name="curr-loc" placeholder="Where are you now?">
+            <button id="submit-location">Submit</button>
+            <h1>Current Location</h1>
+        </div>
+        <div id="temperature">
+            <h1>60 °F</h1>
+            <p id="high">Hi: <span id="hi-temp">75</span> °F / Lo: <span id="low-temp">50</span> °F</p>
+        </div>
+        <div class="scroll">
+            <h3>Make your own weather!</h3>
+            <img src="./assets/down-chevron.png" alt="down chevron arrow"></img>
+        </div>
+    </container>
+    <!-- page 3-->
+    <video playsinline autoplay muted loop poster="assets/down-chevron.png" id="bgvid-3">
+        <source src="assets/Lightning.mp4" type="video/mp4">
+    </video>
+    <container class="page" id="page-3">
+        <div id="matching-location">
+            <h2>A city, SS</h2>
+        </div>
+        <div id="adjustable-temp">
+            <h1 class="chosen-temp" id="cool">60 °F</h1>
+            <div id="arrows">
+                <img id="up-arrow" src="assets/button_arrow_red_up_T.png" />
+                <img id="down-arrow" src="assets/button_arrow_blue_up_T.png" />
+            </div>
+        </div>
+        <div id="choose-weather-conditions">
+            <p>Choose your weather conditions!</p>
+            <div id="weather-icons">
+                <img id="sunny" alt="sunny icon" src="assets/weather_clear_T.png">
+                <img id="cloudy" alt="cloudy icon" src="assets/partly_cloudy_T.png">
+                <img id="rain" alt="rainy icon" src="assets/weather_showers_scattered_T.png">
+                <img id="storm" alt="stormy icon" src="assets/weather_storm_T.png">
+                <img id="snow" alt="snowy icon" src="assets/weather_snow_T.png">
+            </div>
+        </div>
+    </container>
+
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script src="src/index.js" type="text/javascript"></script>
     
 </body>
 </html>

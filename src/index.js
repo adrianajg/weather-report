@@ -7,52 +7,74 @@
 
 // console.log(process.env.LOCATIONIQ_KEY)
 
-let currTemp = parseInt(document.getElementById('temp-now').textContent);
+// let currTemp = parseInt(document.getElementById('temp-now').textContent);
 
-const findLatAndLong = (query) => {  
-  let latitude
-  let longitude
-  console.log("entered findLatAndLong")
+const STATE = {
+  currTemp: 60,
+}
+
+let tempText = document.getElementById('temp-now')
+
+const findLatAndLong = (query) => {
+  let latitude;
+  let longitude;
+  console.log('entered findLatAndLong');
   axios
-    .get('http://127.0.0.1:5000/location',{
+    .get('http://127.0.0.1:5000/location', {
       params: {
-        // key: process.env.LOCATIONIQ_KEY,
         q: query,
-        // format: 'json'
-      }
+      },
     })
     .then((response) => {
       console.log(response);
       latitude = response.data[0].lat;
       longitude = response.data[0].lon;
 
-      
+      console.log(latitude);
+
       let cityState = response.data[0].display_name.split(/[, ]+/);
-      let city = `${cityState[0]}`
-      let state = `${cityState[3]} ${cityState[4]}`
+      let city = `${cityState[0]}`;
+      let state = `${cityState[3]} ${cityState[4]}`;
+
+      // console.log(city)
 
       let displayCity = document.getElementById('city');
-      displayCity.textContent=city;
+      displayCity.textContent = city;
 
       let displayState = document.getElementById('state');
-      displayState.textContent=state;
+      displayState.textContent = state;
+
+      console.log(latitude)
 
       return [latitude, longitude];
-      
     })
     .then((response) => {
-      console.log(response)
+      // console.log('entered nested call')
+      // console.log(response);
       axios
-        .get('http://127.0.0.1:5000/weather',{
+        .get('http://127.0.0.1:5000/weather', {
           params: {
             lat: response[0],
             lon: response[1],
-          }
+          },
         })
-        .then((response)=>{
-          console.log(response)
+        .then((response) => {
+          console.log(response);
 
+          let currTempKelvin = response.data.current.temp;
+          console.log(currTempKelvin);
+
+          let currTempCel = Math.round(currTempKelvin - 273.15);
+          console.log(currTempCel);
+
+          let currTempFar = Math.round(currTempCel * 1.8 + 32);
+          console.log(currTempFar);
+
+          displayRealTemp(currTempFar);
         })
+        .catch((error) => {
+          console.log(error);
+        });
     })
     .then((response) => {
       console.log(response);
@@ -62,96 +84,86 @@ const findLatAndLong = (query) => {
     .catch((error) => {
       console.log(`Error retrieving latitude and longitude for ${query}`);
     });
-}
+};
 
 // findLatAndLong('Charlotte, NC');
 
+const displayRealTemp = (temp) => {
+  tempText.textContent = `${temp} °F`;
+}
 
 const registerEventHandlers = () => {
   let submitButton = document.getElementById('submit-location');
-  submitButton.addEventListener("click", updateCityName)
+  submitButton.addEventListener('click', updateCityName);
 
   let inputBox = document.getElementById('curr-loc');
-  inputBox.addEventListener("keypress", function(event) {
+  inputBox.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
       document.getElementById('submit-location').click();
     }
-  })
-  
+  });
+
   let upArrow = document.getElementById('up-arrow');
-  upArrow.addEventListener("click", incTemp);
+  upArrow.addEventListener('click', incTemp);
 
   let downArrow = document.getElementById('down-arrow');
-  downArrow.addEventListener("click", decTemp);
-
-  
-
-}
+  downArrow.addEventListener('click', decTemp);
+};
 
 const updateCityName = (userInput) => {
   let inputVal = document.getElementById('curr-loc').value;
-  
-  findLatAndLong(inputVal)
-}
+
+  findLatAndLong(inputVal);
+};
 
 const updateTempColor = () => {
   let tempText = document.getElementsByClassName('chosen-temp')[0];
-  if (currTemp < 50) {
+  if (STATE.currTemp < 50) {
     tempText.id = 'cold';
-  }
-  else if (currTemp < 60) {
+  } else if (STATE.currTemp < 60) {
     tempText.id = 'cool';
-  }
-  else if (currTemp < 70) {
+  } else if (STATE.currTemp < 70) {
     tempText.id = 'warm';
-  }
-  else if (currTemp < 80) {
+  } else if (STATE.currTemp < 80) {
     tempText.id = 'hot';
-  }
-  else {
+  } else {
     tempText.id = 'scorching';
-  };
-}
+  }
+};
 
 const realTempColor = () => {
-  let tempText = document.getElementById('temp-now');
+  // let tempText = document.getElementById('temp-now');
   if (parseInt(tempText.textContent) < 50) {
     tempText.id = 'cold';
-  }
-  else if (parseInt(tempText.textContent) < 60) {
+  } else if (parseInt(tempText.textContent) < 60) {
     tempText.id = 'cool';
-  }
-  else if (parseInt(tempText.textContent) < 70) {
+  } else if (parseInt(tempText.textContent) < 70) {
     tempText.id = 'warm';
-  }
-  else if (parseInt(tempText.textContent) < 80) {
+  } else if (parseInt(tempText.textContent) < 80) {
     tempText.id = 'hot';
-  }
-  else {
+  } else {
     tempText.id = 'scorching';
-  };
-}
+  }
+};
 
-updateTempColor()
-realTempColor()
+updateTempColor();
+realTempColor();
 
 const incTemp = () => {
-  currTemp += 1;
+  STATE.currTemp += 1;
   console.log('entered incTemp');
   let adjustableTempText = document.getElementsByClassName('chosen-temp')[0];
-  adjustableTempText.textContent = `${currTemp} °F`;
+  adjustableTempText.textContent = `${STATE.currTemp} °F`;
   updateTempColor();
-}
+};
 
 const decTemp = () => {
-  currTemp -= 1;
+  STATE.currTemp -= 1;
   let adjustableTempText = document.getElementsByClassName('chosen-temp')[0];
-  adjustableTempText.textContent = `${currTemp} °F`
+  adjustableTempText.textContent = `${STATE.currTemp} °F`;
   updateTempColor();
-}
-
-
+};
 
 // console.log(document.getElementById("input-location").childNodes[2])
-document.addEventListener("DOMContentLoaded", registerEventHandlers)
-updateCityName("Charlotte, NC")
+document.addEventListener('DOMContentLoaded', registerEventHandlers);
+// updateCityName('Charlotte, NC');

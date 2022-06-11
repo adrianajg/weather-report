@@ -77,6 +77,8 @@ const findLatAndLong = (query) => {
           let lowTempKelvin = response.data.daily[0].temp.min;
           lowTempText.textContent = convertKelvinToCelcius(lowTempKelvin);
           
+          realTempColor();
+
         })
         .catch((error) => {
           console.log(error);
@@ -151,6 +153,7 @@ const updateTempColor = () => {
 
 const realTempColor = () => {
   // let tempText = document.getElementById('temp-now');
+  console.log('entered realTempColor');
   if (parseInt(tempText.textContent) < 50) {
     tempText.id = 'cold';
   } else if (parseInt(tempText.textContent) < 60) {

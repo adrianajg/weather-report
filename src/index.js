@@ -1,29 +1,63 @@
 // const axios = require('axios')
 // require('dotenv').config()
 
+// const { default: axios } = require("axios");
+
 // console.log(document.getElementById('curr-loc'));
+
+// console.log(process.env.LOCATIONIQ_KEY)
 
 let currTemp = parseInt(document.getElementById('temp-now').textContent);
 
 const findLatAndLong = (query) => {  
+  let latitude
+  let longitude
+  console.log("entered findLatAndLong")
   axios
-    .get('https://us1.locationiq.com/v1/search.php',{
+    .get('http://127.0.0.1:5000/location',{
       params: {
-        key: process.env.LOCATIONIQ_API_KEY,
-        q: 'Charlotte, NC',
-        format: 'json'
+        // key: process.env.LOCATIONIQ_KEY,
+        q: query,
+        // format: 'json'
       }
     })
     .then((response) => {
-      // console.log(response);
+      console.log(response);
       latitude = response.data[0].lat;
       longitude = response.data[0].lon;
 
-      let latHeader = document.getElementById('latitude');
-      latHeader.textContent = latitude
+      
+      let cityState = response.data[0].display_name.split(/[, ]+/);
+      let city = `${cityState[0]}`
+      let state = `${cityState[3]} ${cityState[4]}`
 
-      console.log(latitude);
-      console.log(longitude);
+      let displayCity = document.getElementById('city');
+      displayCity.textContent=city;
+
+      let displayState = document.getElementById('state');
+      displayState.textContent=state;
+
+      return [latitude, longitude];
+      
+    })
+    .then((response) => {
+      console.log(response)
+      axios
+        .get('http://127.0.0.1:5000/weather',{
+          params: {
+            lat: response[0],
+            lon: response[1],
+          }
+        })
+        .then((response)=>{
+          console.log(response)
+
+        })
+    })
+    .then((response) => {
+      console.log(response);
+      latitude = response.data[0].lat;
+      longitude = response.data[0].lon;
     })
     .catch((error) => {
       console.log(`Error retrieving latitude and longitude for ${query}`);
@@ -52,6 +86,12 @@ const registerEventHandlers = () => {
 
   
 
+}
+
+const updateCityName = (userInput) => {
+  let inputVal = document.getElementById('curr-loc').value;
+  
+  findLatAndLong(inputVal)
 }
 
 const updateTempColor = () => {
@@ -110,11 +150,7 @@ const decTemp = () => {
   updateTempColor();
 }
 
-const updateCityName = (userInput) => {
-  let inputVal = document.getElementById('curr-loc').value;
-  let cityName = document.getElementById('input-location').childNodes[5];
-  cityName.textContent=inputVal
-}
+
 
 // console.log(document.getElementById("input-location").childNodes[2])
 document.addEventListener("DOMContentLoaded", registerEventHandlers)

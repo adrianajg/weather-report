@@ -36,9 +36,14 @@
     </video>
     <container class="page" id="page-2">
         <div id="input-location">
-            <input type="text" id="curr-loc" name="curr-loc" placeholder="Where are you now?">
-            <button id="submit-location">Submit</button>
-            <h1>Current Location</h1>
+            <span id="search-window">
+                <input type="text" id="curr-loc" name="curr-loc" placeholder="Where are you now?">
+                <button id="submit-location">Submit</button>
+            </span>
+            <span id="city-state">
+                <h1 id="city">City</h1>
+                <h2 id="state">USA</h2>
+            </span>
         </div>
         <div class="real-temp">
             <h1 id="temp-now">60 °F</h1>

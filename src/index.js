@@ -13,7 +13,9 @@ const STATE = {
   currTemp: 60,
 }
 
-let tempText = document.getElementById('temp-now')
+let tempText = document.getElementById('temp-now');
+let highTempText = document.getElementById('hi-temp');
+let lowTempText = document.getElementById('low-temp');
 
 const findLatAndLong = (query) => {
   let latitude;
@@ -50,7 +52,7 @@ const findLatAndLong = (query) => {
     })
     .then((response) => {
       // console.log('entered nested call')
-      // console.log(response);
+      console.log(response);
       axios
         .get('http://127.0.0.1:5000/weather', {
           params: {
@@ -62,15 +64,19 @@ const findLatAndLong = (query) => {
           console.log(response);
 
           let currTempKelvin = response.data.current.temp;
-          console.log(currTempKelvin);
 
-          let currTempCel = Math.round(currTempKelvin - 273.15);
-          console.log(currTempCel);
+          // let currTempCel = Math.round(currTempKelvin - 273.15);
 
-          let currTempFar = Math.round(currTempCel * 1.8 + 32);
-          console.log(currTempFar);
+          let currTempFar = convertKelvinToCelcius(currTempKelvin);
 
           displayRealTemp(currTempFar);
+
+          let highTempKelvin = response.data.daily[0].temp.max;
+          highTempText.textContent = convertKelvinToCelcius(highTempKelvin);
+
+          let lowTempKelvin = response.data.daily[0].temp.min;
+          lowTempText.textContent = convertKelvinToCelcius(lowTempKelvin);
+          
         })
         .catch((error) => {
           console.log(error);
@@ -88,8 +94,20 @@ const findLatAndLong = (query) => {
 
 // findLatAndLong('Charlotte, NC');
 
+const convertKelvinToCelcius = (temp) => {
+  let tempCel = Math.round(temp - 273.15);
+
+  let tempFar = Math.round(tempCel * 1.8 + 32);
+
+  return tempFar;
+}
+
 const displayRealTemp = (temp) => {
   tempText.textContent = `${temp} °F`;
+}
+
+const displayHighTemp = (temp) => {
+  
 }
 
 const registerEventHandlers = () => {

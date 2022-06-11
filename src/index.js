@@ -1,7 +1,7 @@
 // const axios = require('axios')
 // require('dotenv').config()
 
-// console.log(process.env.LOCATIONIQ_API_KEY)
+// console.log(document.getElementById('curr-loc'));
 
 let currTemp = parseInt(document.getElementById('temp-now').textContent);
 
@@ -35,14 +35,22 @@ const findLatAndLong = (query) => {
 
 const registerEventHandlers = () => {
   let submitButton = document.getElementById('submit-location');
-  // submitButton.addEventListener("click", changeText);
   submitButton.addEventListener("click", updateCityName)
+
+  let inputBox = document.getElementById('curr-loc');
+  inputBox.addEventListener("keypress", function(event) {
+    if (event.key === 'Enter') {
+      document.getElementById('submit-location').click();
+    }
+  })
   
   let upArrow = document.getElementById('up-arrow');
   upArrow.addEventListener("click", incTemp);
 
   let downArrow = document.getElementById('down-arrow');
   downArrow.addEventListener("click", decTemp);
+
+  
 
 }
 
@@ -103,9 +111,7 @@ const decTemp = () => {
 }
 
 const updateCityName = (userInput) => {
-  console.log('entered updateCityName')
   let inputVal = document.getElementById('curr-loc').value;
-  console.log(inputVal)
   let cityName = document.getElementById('input-location').childNodes[5];
   cityName.textContent=inputVal
 }

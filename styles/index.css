@@ -50,6 +50,12 @@ body {
     justify-items: center;
 }
 
+.real-temp {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
 #input-location {
     display: flex;
     flex-direction: column;
@@ -132,6 +138,17 @@ body {
 #cold {
     color: #c6e2ff;
     animation: neon-cold .08s ease-in-out infinite alternate;
+}
+
+#thermometer-image, #chosen-temp-thermometer {
+    height: 3.5vw;
+    width: 1.2vw;
+    align-self: center;
+}
+
+#page2-temp-display {
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes neon-cold {

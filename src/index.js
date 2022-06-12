@@ -137,33 +137,39 @@ const updateCityName = (userInput) => {
 };
 
 const updateTempColor = () => {
-  let tempText = document.getElementsByClassName('chosen-temp')[0];
+  let chosenTempText = document.getElementsByClassName('chosen-temp')[0];
+  let chosenTherm = document.getElementById('thermometer-image')
   if (STATE.currTemp < 50) {
-    tempText.id = 'cold';
+    chosenTempText.id = 'cold';
   } else if (STATE.currTemp < 60) {
-    tempText.id = 'cool';
+    chosenTempText.id = 'cool';
   } else if (STATE.currTemp < 70) {
-    tempText.id = 'warm';
+    chosenTempText.id = 'warm';
   } else if (STATE.currTemp < 80) {
-    tempText.id = 'hot';
+    chosenTempText.id = 'hot';
   } else {
-    tempText.id = 'scorching';
+    chosenTempText.id = 'scorching';
   }
 };
 
 const realTempColor = () => {
-  // let tempText = document.getElementById('temp-now');
+  let thermometerDisplay = document.getElementById('thermometer-image')
   console.log('entered realTempColor');
   if (parseInt(tempText.textContent) < 50) {
     tempText.id = 'cold';
+    thermometerDisplay.src = './assets/thermometer-icons/cold.png';
   } else if (parseInt(tempText.textContent) < 60) {
     tempText.id = 'cool';
+    thermometerDisplay.src = './assets/thermometer-icons/cool.png';
   } else if (parseInt(tempText.textContent) < 70) {
     tempText.id = 'warm';
+    thermometerDisplay.src = './assets/thermometer-icons/warm.png';
   } else if (parseInt(tempText.textContent) < 80) {
     tempText.id = 'hot';
+    thermometerDisplay.src = './assets/thermometer-icons/hot.png';
   } else {
     tempText.id = 'scorching';
+    thermometerDisplay.src = './assets/thermometer-icons/scorching.png';
   }
 };
 

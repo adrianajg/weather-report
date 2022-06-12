@@ -28,11 +28,11 @@ const findLatAndLong = (query) => {
       },
     })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       latitude = response.data[0].lat;
       longitude = response.data[0].lon;
 
-      console.log(latitude);
+      // console.log(latitude);
 
       let cityState = response.data[0].display_name.split(/[, ]+/);
       let city = `${cityState[0]}`;
@@ -46,7 +46,7 @@ const findLatAndLong = (query) => {
       let displayState = document.getElementById('state');
       displayState.textContent = state;
 
-      console.log(latitude)
+      // console.log(latitude)
 
       return [latitude, longitude];
     })
@@ -79,16 +79,19 @@ const findLatAndLong = (query) => {
           
           realTempColor();
 
+          let conditions = response.data.current.weather[0].description;
+          displayRealConditions(conditions);
+
         })
         .catch((error) => {
           console.log(error);
         });
     })
-    .then((response) => {
-      console.log(response);
-      latitude = response.data[0].lat;
-      longitude = response.data[0].lon;
-    })
+    // .then((response) => {
+    //   // console.log(response);
+    //   latitude = response.data[0].lat;
+    //   longitude = response.data[0].lon;
+    // })
     .catch((error) => {
       console.log(`Error retrieving latitude and longitude for ${query}`);
     });
@@ -110,6 +113,38 @@ const displayRealTemp = (temp) => {
 
 const displayHighTemp = (temp) => {
   
+}
+
+const displayRealConditions = (weather) => {
+  let backgroundWeather = document.getElementById('page2-conditions');
+
+  let video = document.getElementById('bgvid-2');
+  console.log('before weather');
+  console.log(weather);
+
+  if (weather.toLowerCase().includes('clouds')) {
+    if (weather.toLowerCase().includes('scattered clouds') || weather.toLowerCase().includes('few clouds') || weather.toLowerCase().includes('broken clouds')) {
+      backgroundWeather.setAttribute('src', './assets/partly-cloudy.mp4')
+    } else {
+      backgroundWeather.setAttribute('src', './assets/RooftopClouds.mp4');
+    }
+  } 
+  else if (weather.toLowerCase().includes('snow') || weather.toLowerCase().includes('sleet')) {
+    backgroundWeather.setAttribute('src', './assets/snow.mp4');
+  }
+  else if (weather.toLowerCase().includes('thunderstorm')) {
+    backgroundWeather.setAttribute('src', './assets/lightning.mp4')
+  }
+  else if (weather.toLowerCase().includes('rain') || weather.toLowerCase().includes('drizzle')) {
+    backgroundWeather.setAttribute('src', './assets/rain.mp4');
+  }
+  else {
+    backgroundWeather.setAttribute('src', './assets/sunny.mp4');
+  }
+
+  console.log(backgroundWeather)
+  video.load();
+  video.play();
 }
 
 const registerEventHandlers = () => {
@@ -173,6 +208,7 @@ const realTempColor = () => {
   }
 };
 
+findLatAndLong('Charlotte, NC')
 updateTempColor();
 realTempColor();
 

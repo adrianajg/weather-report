@@ -175,11 +175,13 @@ const registerEventHandlers = () => {
   let snowIcon = document.getElementById('snow');
   snowIcon.addEventListener('click', displayChosenSnow);
 
+  let dropDownState = document.getElementById('choose-state');
+  dropDownState.addEventListener('change', displayChosenState);
+
 };
 
-const updateCityName = (userInput) => {
+const updateCityName = () => {
   let inputVal = document.getElementById('curr-loc').value;
-
   findLatAndLong(inputVal);
 };
 
@@ -243,6 +245,25 @@ const decTemp = () => {
   adjustableTempText.textContent = `${STATE.currTemp} °F`;
   updateTempColor();
 };
+
+
+// Display chosen city and state name
+
+const displayChosenCity = (input) => {
+  console.log('entered displayChosenCity')
+  console.log(input)
+  let displayCity = document.getElementById('display-chosen-city-state');
+  displayCity.textContent = input;
+};
+
+const displayChosenState = () => {
+  console.log('entered displayChosenState')
+  let chosenState = document.getElementById('display-chosen-state');
+  let selectState = document.getElementById('choose-state');
+
+  chosenState.textContent = selectState.value;
+  
+}
 
 // Display weather for chosen weather
 

@@ -157,6 +157,7 @@ body {
     display: flex;
     flex-direction: column;
     padding-bottom: 2vw;
+    align-items: center;
 }
 
 #chosen-city-state {

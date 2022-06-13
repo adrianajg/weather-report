@@ -111,10 +111,6 @@ const displayRealTemp = (temp) => {
   tempText.textContent = `${temp} °F`;
 }
 
-const displayHighTemp = (temp) => {
-  
-}
-
 const displayRealConditions = (weather) => {
   let backgroundWeather = document.getElementById('page2-conditions');
 
@@ -163,6 +159,22 @@ const registerEventHandlers = () => {
 
   let downArrow = document.getElementById('down-arrow');
   downArrow.addEventListener('click', decTemp);
+
+  let sunnyIcon = document.getElementById('sunny');
+  sunnyIcon.addEventListener('click', displayChosenSunny);
+
+  let cloudyIcon = document.getElementById('cloudy');
+  cloudyIcon.addEventListener('click', displayChosenCloudy);
+
+  let rainIcon = document.getElementById('rain');
+  rainIcon.addEventListener('click', displayChosenRain);
+
+  let stormIcon = document.getElementById('storm');
+  stormIcon.addEventListener('click', displayChosenStorm);
+
+  let snowIcon = document.getElementById('snow');
+  snowIcon.addEventListener('click', displayChosenSnow);
+
 };
 
 const updateCityName = (userInput) => {
@@ -173,17 +185,22 @@ const updateCityName = (userInput) => {
 
 const updateTempColor = () => {
   let chosenTempText = document.getElementsByClassName('chosen-temp')[0];
-  let chosenTherm = document.getElementById('thermometer-image')
+  let chosenTherm = document.getElementById('chosen-temp-thermometer');
   if (STATE.currTemp < 50) {
     chosenTempText.id = 'cold';
+    chosenTherm.src = './assets/thermometer-icons/cold.png';
   } else if (STATE.currTemp < 60) {
     chosenTempText.id = 'cool';
+    chosenTherm.src = './assets/thermometer-icons/cool.png';
   } else if (STATE.currTemp < 70) {
     chosenTempText.id = 'warm';
+    chosenTherm.src = './assets/thermometer-icons/warm.png';
   } else if (STATE.currTemp < 80) {
     chosenTempText.id = 'hot';
+    chosenTherm.src = './assets/thermometer-icons/hot.png';
   } else {
     chosenTempText.id = 'scorching';
+    chosenTherm.src = './assets/thermometer-icons/scorching.png';
   }
 };
 
@@ -226,6 +243,60 @@ const decTemp = () => {
   adjustableTempText.textContent = `${STATE.currTemp} °F`;
   updateTempColor();
 };
+
+// Display weather for chosen weather
+
+const displayChosenSunny = () => {
+  console.log('entered displayChosenSunny');
+  let backgroundChosenWeather = document.getElementById('page3-conditions');
+  let video = document.getElementById('bgvid-3');
+
+  backgroundChosenWeather.setAttribute('src', './assets/sunny.mp4');
+
+  video.load();
+  video.play();
+}
+
+const displayChosenCloudy = () => {
+  let backgroundChosenWeather = document.getElementById('page3-conditions');
+  let video = document.getElementById('bgvid-3');
+
+  backgroundChosenWeather.setAttribute('src', './assets/partly-cloudy.mp4');
+
+  video.load();
+  video.play();
+}
+
+const displayChosenRain = () => {
+  let backgroundChosenWeather = document.getElementById('page3-conditions');
+  let video = document.getElementById('bgvid-3');
+
+  backgroundChosenWeather.setAttribute('src', './assets/rain.mp4');
+
+  video.load();
+  video.play();
+}
+
+const displayChosenStorm = () => {
+  let backgroundChosenWeather = document.getElementById('page3-conditions');
+  let video = document.getElementById('bgvid-3');
+
+  backgroundChosenWeather.setAttribute('src', './assets/Lightning.mp4');
+
+  video.load();
+  video.play();
+}
+
+const displayChosenSnow = () => {
+  let backgroundChosenWeather = document.getElementById('page3-conditions');
+  let video = document.getElementById('bgvid-3');
+
+  backgroundChosenWeather.setAttribute('src', './assets/snow.mp4');
+
+  video.load();
+  video.play();
+}
+
 
 // console.log(document.getElementById("input-location").childNodes[2])
 document.addEventListener('DOMContentLoaded', registerEventHandlers);

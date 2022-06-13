@@ -178,6 +178,9 @@ const registerEventHandlers = () => {
   let dropDownState = document.getElementById('choose-state');
   dropDownState.addEventListener('change', displayChosenState);
 
+  let resetButton = document.getElementById('reset-location');
+  resetButton.addEventListener('click', resetChosenLocation)
+
 };
 
 const updateCityName = () => {
@@ -263,6 +266,14 @@ const displayChosenState = () => {
 
   chosenState.textContent = selectState.value;
   
+}
+
+const resetChosenLocation = () => {
+  let chosenState = document.getElementById('display-chosen-state');
+  chosenState.textContent = "North Carolina";
+
+  let chosenCity = document.getElementById('display-chosen-city-state');
+  chosenCity.textContent = "Charlotte"
 }
 
 // Display weather for chosen weather

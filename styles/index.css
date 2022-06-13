@@ -108,6 +108,8 @@ body {
     justify-content: space-evenly;
 }
 
+
+
 .scroll {
     position: relative;
     text-align: center;
@@ -161,6 +163,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#chosen-city-state-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
 
 @keyframes neon-cold {

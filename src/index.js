@@ -1,13 +1,5 @@
-// const axios = require('axios')
-// require('dotenv').config()
-
-// const { default: axios } = require("axios");
-
-// console.log(document.getElementById('curr-loc'));
-
-// console.log(process.env.LOCATIONIQ_KEY)
-
-// let currTemp = parseInt(document.getElementById('temp-now').textContent);
+import 'regenerator-runtime/runtime';
+import axios from 'axios';
 
 const STATE = {
   currTemp: 60,

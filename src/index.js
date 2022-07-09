@@ -1,17 +1,9 @@
-// const axios = require('axios')
-// require('dotenv').config()
-
-// const { default: axios } = require("axios");
-
-// console.log(document.getElementById('curr-loc'));
-
-// console.log(process.env.LOCATIONIQ_KEY)
-
-// let currTemp = parseInt(document.getElementById('temp-now').textContent);
+import 'regenerator-runtime/runtime';
+import axios from 'axios';
 
 const STATE = {
   currTemp: 60,
-}
+};
 
 let tempText = document.getElementById('temp-now');
 let highTempText = document.getElementById('hi-temp');
@@ -76,12 +68,11 @@ const findLatAndLong = (query) => {
 
           let lowTempKelvin = response.data.daily[0].temp.min;
           lowTempText.textContent = convertKelvinToCelcius(lowTempKelvin);
-          
+
           realTempColor();
 
           let conditions = response.data.current.weather[0].description;
           displayRealConditions(conditions);
-
         })
         .catch((error) => {
           console.log(error);
@@ -105,11 +96,11 @@ const convertKelvinToCelcius = (temp) => {
   let tempFar = Math.round(tempCel * 1.8 + 32);
 
   return tempFar;
-}
+};
 
 const displayRealTemp = (temp) => {
   tempText.textContent = `${temp} °F`;
-}
+};
 
 const displayRealConditions = (weather) => {
   let backgroundWeather = document.getElementById('page2-conditions');
@@ -119,29 +110,35 @@ const displayRealConditions = (weather) => {
   console.log(weather);
 
   if (weather.toLowerCase().includes('clouds')) {
-    if (weather.toLowerCase().includes('scattered clouds') || weather.toLowerCase().includes('few clouds') || weather.toLowerCase().includes('broken clouds')) {
-      backgroundWeather.setAttribute('src', './assets/partly-cloudy.mp4')
+    if (
+      weather.toLowerCase().includes('scattered clouds') ||
+      weather.toLowerCase().includes('few clouds') ||
+      weather.toLowerCase().includes('broken clouds')
+    ) {
+      backgroundWeather.setAttribute('src', './assets/partly-cloudy.mp4');
     } else {
       backgroundWeather.setAttribute('src', './assets/RooftopClouds.mp4');
     }
-  } 
-  else if (weather.toLowerCase().includes('snow') || weather.toLowerCase().includes('sleet')) {
+  } else if (
+    weather.toLowerCase().includes('snow') ||
+    weather.toLowerCase().includes('sleet')
+  ) {
     backgroundWeather.setAttribute('src', './assets/snow.mp4');
-  }
-  else if (weather.toLowerCase().includes('thunderstorm')) {
-    backgroundWeather.setAttribute('src', './assets/lightning.mp4')
-  }
-  else if (weather.toLowerCase().includes('rain') || weather.toLowerCase().includes('drizzle')) {
+  } else if (weather.toLowerCase().includes('thunderstorm')) {
+    backgroundWeather.setAttribute('src', './assets/lightning.mp4');
+  } else if (
+    weather.toLowerCase().includes('rain') ||
+    weather.toLowerCase().includes('drizzle')
+  ) {
     backgroundWeather.setAttribute('src', './assets/rain.mp4');
-  }
-  else {
+  } else {
     backgroundWeather.setAttribute('src', './assets/sunny.mp4');
   }
 
-  console.log(backgroundWeather)
+  console.log(backgroundWeather);
   video.load();
   video.play();
-}
+};
 
 const registerEventHandlers = () => {
   let submitButton = document.getElementById('submit-location');
@@ -179,8 +176,7 @@ const registerEventHandlers = () => {
   dropDownState.addEventListener('change', displayChosenState);
 
   let resetButton = document.getElementById('reset-location');
-  resetButton.addEventListener('click', resetChosenLocation)
-
+  resetButton.addEventListener('click', resetChosenLocation);
 };
 
 const updateCityName = () => {
@@ -210,7 +206,7 @@ const updateTempColor = () => {
 };
 
 const realTempColor = () => {
-  let thermometerDisplay = document.getElementById('thermometer-image')
+  let thermometerDisplay = document.getElementById('thermometer-image');
   console.log('entered realTempColor');
   if (parseInt(tempText.textContent) < 50) {
     tempText.id = 'cold';
@@ -230,7 +226,7 @@ const realTempColor = () => {
   }
 };
 
-findLatAndLong('Charlotte, NC')
+findLatAndLong('Charlotte, NC');
 updateTempColor();
 realTempColor();
 
@@ -249,32 +245,30 @@ const decTemp = () => {
   updateTempColor();
 };
 
-
 // Display chosen city and state name
 
 const displayChosenCity = (input) => {
-  console.log('entered displayChosenCity')
-  console.log(input)
+  console.log('entered displayChosenCity');
+  console.log(input);
   let displayCity = document.getElementById('display-chosen-city-state');
   displayCity.textContent = input;
 };
 
 const displayChosenState = () => {
-  console.log('entered displayChosenState')
+  console.log('entered displayChosenState');
   let chosenState = document.getElementById('display-chosen-state');
   let selectState = document.getElementById('choose-state');
 
   chosenState.textContent = selectState.value;
-  
-}
+};
 
 const resetChosenLocation = () => {
   let chosenState = document.getElementById('display-chosen-state');
-  chosenState.textContent = "North Carolina";
+  chosenState.textContent = 'North Carolina';
 
   let chosenCity = document.getElementById('display-chosen-city-state');
-  chosenCity.textContent = "Charlotte"
-}
+  chosenCity.textContent = 'Charlotte';
+};
 
 // Display weather for chosen weather
 
@@ -287,7 +281,7 @@ const displayChosenSunny = () => {
 
   video.load();
   video.play();
-}
+};
 
 const displayChosenCloudy = () => {
   let backgroundChosenWeather = document.getElementById('page3-conditions');
@@ -297,7 +291,7 @@ const displayChosenCloudy = () => {
 
   video.load();
   video.play();
-}
+};
 
 const displayChosenRain = () => {
   let backgroundChosenWeather = document.getElementById('page3-conditions');
@@ -307,7 +301,7 @@ const displayChosenRain = () => {
 
   video.load();
   video.play();
-}
+};
 
 const displayChosenStorm = () => {
   let backgroundChosenWeather = document.getElementById('page3-conditions');
@@ -317,7 +311,7 @@ const displayChosenStorm = () => {
 
   video.load();
   video.play();
-}
+};
 
 const displayChosenSnow = () => {
   let backgroundChosenWeather = document.getElementById('page3-conditions');
@@ -327,8 +321,7 @@ const displayChosenSnow = () => {
 
   video.load();
   video.play();
-}
-
+};
 
 // console.log(document.getElementById("input-location").childNodes[2])
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
